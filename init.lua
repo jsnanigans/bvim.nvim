@@ -75,6 +75,8 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.opt.termguicolors = true
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -204,6 +206,7 @@ require('lazy').setup({
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]ypeScript', _ = 'which_key_ignore' },
+        ['<leader>n'] = { name = '[N]eoTree', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -501,15 +504,21 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
+      --
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
+            -- do nothing for tsserver
+            if server_name == 'tsserver' then
+              return
+            end
+
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            -- turn off tsserver formatting
             require('lspconfig')[server_name].setup(server)
           end,
         },
