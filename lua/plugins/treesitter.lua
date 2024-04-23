@@ -9,7 +9,7 @@ return {
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
-        ensure_installed={'lua','vim','vimdoc','typescript'},
+        ensure_installed={'lua','vim','vimdoc','typescript','markdown','markdown_inline'},
         highlight = {
         enable= true
         }
