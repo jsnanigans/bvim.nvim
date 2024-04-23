@@ -107,12 +107,7 @@ return {
         -- see `:h neo-tree-custom-commands-global`
         commands = {},
         window = {
-          position = 'left',
-          width = 40,
-          mapping_options = {
-            noremap = true,
-            nowait = true,
-          },
+          position = 'float',
           mappings = {
             ['<space>'] = {
               'toggle_node',
