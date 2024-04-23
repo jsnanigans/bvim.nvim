@@ -1,96 +1,105 @@
 M = {}
 
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
--- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = true
+-- undo
+vim.opt.undofile = true
+vim.opt.undolevels = 10000
+vim.opt.updatetime = 200 -- Save swap file and trigger CursorHold
 
--- setup Spell
---:setlocal spell spelllang=en_us
-vim.opt.spell = true
-vim.opt.spelllang = 'en_us'
+-- skip startup screen
+vim.opt.shortmess:append("I")
 
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
+-- fillchars
+-- vim.opt.fillchars = {
+--     foldopen = "",
+--     foldclose = "",
+--     -- fold = "⸱",
+--     fold = " ",
+--     foldsep = " ",
+--     diff = "╱",
+--     -- diff = "╱",
+--     -- diff = "░",
+--     -- diff = "·",
+--     eob = " ",
+-- }
 
--- make somethng wrong something
-
--- Make line numbers default
+-- line numbers
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
+-- set tab and indents defaults (can be overridden by per-language configs)
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
 
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
+-- column ruler (can be overridden by per-language configs)
+vim.opt.colorcolumn = nil
 
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.opt.clipboard = 'unnamedplus'
+-- incremental search
+vim.opt.incsearch = true
+vim.opt.hlsearch = true
 
--- Enable break indent
-vim.opt.breakindent = true
-
--- Save undo history
-vim.opt.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+-- ignore case when searching
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
+-- text wrap
+vim.opt.wrap = false
 
--- Decrease update time
-vim.opt.updatetime = 250
+-- completion
+vim.opt.completeopt = "menuone,noselect"
 
--- Decrease mapped sequence wait time
--- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
-
--- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
-
--- Show which line your cursor is on
-vim.opt.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
-
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- Set highlight on search, but clear on pressing <Esc> in normal mode
-vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
+-- 24-bit color
 vim.opt.termguicolors = true
 
+-- sign column
+vim.opt.signcolumn = "yes"
+
+-- cursor line highlight
+vim.opt.cursorline = true
+
+-- splitting
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+-- fold settings
+-- see ufo.lua
+
+-- scroll off
+vim.opt.scrolloff = 8
+
+-- mouse support in all modes
+vim.opt.mouse = "a"
+
+-- project specific settings (see lazyrc.lua for .lazy.lua support)
+vim.opt.exrc = true   -- allow local .nvim.lua .vimrc .exrc files
+vim.opt.secure = true -- disable shell and write commands in local .nvim.lua .vimrc .exrc files
+
+-- sync with system clipboard (also see autocmds for text yank config)
+vim.opt.clipboard = "unnamedplus"
+
+-- TODO: pick from https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+vim.opt.listchars = "tab:▸ ,trail:·,nbsp:␣,extends:❯,precedes:❮" -- show symbols for whitespace
+
 M.setup_folding_options = function()
-  vim.opt.foldcolumn = '0'
-  vim.opt.foldlevel = 99
-  vim.opt.foldlevelstart = 99
-  vim.opt.foldenable = true
+    vim.opt.foldcolumn = "0"
+    vim.opt.foldlevel = 99
+    vim.opt.foldlevelstart = 99
+    vim.opt.foldenable = true
+end
+
+-- settings for neovim 0.10.0+
+if require("utils.version").is_neovim_0_10_0() then
+    vim.opt.smoothscroll = true
+end
+
+-- settings for vscode neovim
+if not vim.g.vscode then
+    vim.opt.timeoutlen = 300 -- Lower than default (1000) to quickly trigger which-key
 end
 
 return M

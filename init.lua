@@ -1,7 +1,14 @@
-require 'config.options'
-require 'config.autocmd'
-require 'config.keymaps'
-require 'config.lazy'
+-- set up backwards compatibility
+require('utils.version').setup_backwards_compat()
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- set options
+require 'config.options'
+
+-- set auto commands
+require 'config.autocmds'
+
+-- setup mini dependency manager and plugins
+require 'config.mini'
+
+-- setup up package manager, load plugins and configs
+require 'config.lazy'
