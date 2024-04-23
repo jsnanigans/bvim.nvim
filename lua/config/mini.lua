@@ -28,12 +28,25 @@ end)
 
 -- mini.notify : https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-notify.md
 now(function()
-    require('mini.notify').setup()
-    vim.notify = require('mini.notify').make_notify()
+    -- require('mini.notify').setup()
+    -- vim.notify = require('mini.notify').make_notify()
 end)
 
 -- mini.files : https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
 now(function() require('mini.files').setup() end)
+
+now(function() require('mini.ai').setup() end)
+now(function() require('mini.bufremove').setup() end)
+now(function() require('mini.comment').setup() end)
+now(function() require('mini.cursorword').setup() end)
+now(function() require('mini.indentscope').setup() end)
+now(function() require('mini.jump2d').setup() end)
+now(function() require('mini.pairs').setup() end)
+now(function() require('mini.sessions').setup() end)
+now(function() require('mini.starter').setup() end)
+now(function() require('mini.statusline').setup() end)
+now(function() require('mini.surround').setup() end)
+-- now(function() require('mini.bracketed').setup() end)
 
 -- now(function() require('mini.tabline').setup() end)
 -- now(function() require('mini.statusline').setup() end)

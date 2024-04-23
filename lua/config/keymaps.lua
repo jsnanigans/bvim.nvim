@@ -10,12 +10,14 @@ local function map_normal_mode(keys, func, desc)
 end
 
 function M.setup_mini_keymaps()
-    vim.keymap.set('n', '<C-b>', ':lua MiniFiles.open()<CR>', { noremap = true, silent = true, desc = 'Open Files' })
+    vim.keymap.set('n', '<C-b>', ':lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>', { noremap = true, silent = true, desc = 'Open Files' })
 end
 
 -- file stuff
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus left' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus right' })
 vim.keymap.set('n', '<C-s>', ':w<CR>', { noremap = true, silent = true, desc = 'Save' })
 vim.keymap.set('n', '<C-o>', ':b#<CR>', { noremap = true, silent = true, desc = 'Go to previous open buffer' })
 vim.keymap.set('n', '<leader>qq', ':wqa<CR>', { noremap = true, silent = true, desc = 'Save and quit all' })
@@ -41,6 +43,7 @@ function M.setup_telescope_keymaps()
     map_normal_mode("<leader><leader>", require("telescope.builtin").find_files, "Find Files")
     map_normal_mode("<leader>sb", "<cmd>Telescope buffers<CR>", "[s]earch opened [b]uffers")
     map_normal_mode("<leader>sC", "<cmd>Telescope commands<cr>", "[s]earch [C]ommands")
+    map_normal_mode("<leader>/", require("telescope").extensions.live_grep_args.live_grep_args, "[s]earch [g]rep")
 end
 
 function M.setup_trouble_keymaps()
@@ -56,29 +59,29 @@ function M.setup_trouble_keymaps()
       desc = "Buffer Diagnostics (Trouble)",
     },
     {
-      "<leader>cs",
+      "<leader>xs",
       "<cmd>Trouble symbols toggle focus=false<cr>",
       desc = "Symbols (Trouble)",
     },
     {
-      "<leader>cl",
+      "<leader>xr",
       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
       desc = "LSP Definitions / references / ... (Trouble)",
     },
     {
-      "<leader>xL",
+      "<leader>xl",
       "<cmd>Trouble loclist toggle<cr>",
       desc = "Location List (Trouble)",
     },
     {
-      "<leader>xQ",
+      "<leader>xq",
       "<cmd>Trouble qflist toggle<cr>",
       desc = "Quickfix List (Trouble)",
     },
   }
 end
 
-function M.setup_lsp_keymaps()
+function M.setup_lsp_keymaps(event)
   local map = function(keys, func, desc)
     vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
   end
