@@ -3,14 +3,15 @@ M = {}
 vim.keymap.set('n', 'U', '<C-r>', { noremap = true, silent = true, desc = 'Redo' })
 
 local function map_normal_mode(keys, func, desc)
-    -- default values:
-    -- noremap: false
-    -- silent: false
-    vim.keymap.set("n", keys, func, { desc = desc, noremap = false, silent = true })
+  -- default values:
+  -- noremap: false
+  -- silent: false
+  vim.keymap.set("n", keys, func, { desc = desc, noremap = false, silent = true })
 end
 
 function M.setup_mini_keymaps()
-    vim.keymap.set('n', '<C-b>', ':lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>', { noremap = true, silent = true, desc = 'Open Files' })
+  vim.keymap.set('n', '<C-b>', ':lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>',
+    { noremap = true, silent = true, desc = 'Open Files' })
 end
 
 -- file stuff
@@ -24,26 +25,26 @@ vim.keymap.set('n', '<leader>qq', ':wqa<CR>', { noremap = true, silent = true, d
 
 
 function M.setup_whichkey()
-    return {
-        ["<leader>q"] = {
-            name = "+quick actions",
-        },
-        ["<leader>s"] = {
-            name = "+search",
-        }
+  return {
+    ["<leader>q"] = {
+      name = "+quick actions",
+    },
+    ["<leader>s"] = {
+      name = "+search",
     }
+  }
 end
 
 function M.setup_telescope_keymaps()
-    -- git
-    map_normal_mode("<leader>sc", "<cmd>Telescope git_commits<CR>", "[s]earch git [c]ommits")
-    map_normal_mode("<leader>sg", "<cmd>Telescope git_status<CR>", "[s]earch git changes")
+  -- git
+  map_normal_mode("<leader>sc", "<cmd>Telescope git_commits<CR>", "[s]earch git [c]ommits")
+  map_normal_mode("<leader>sg", "<cmd>Telescope git_status<CR>", "[s]earch git changes")
 
-    -- searching
-    map_normal_mode("<leader><leader>", require("telescope.builtin").find_files, "Find Files")
-    map_normal_mode("<leader>sb", "<cmd>Telescope buffers<CR>", "[s]earch opened [b]uffers")
-    map_normal_mode("<leader>sC", "<cmd>Telescope commands<cr>", "[s]earch [C]ommands")
-    map_normal_mode("<leader>/", require("telescope").extensions.live_grep_args.live_grep_args, "[s]earch [g]rep")
+  -- searching
+  map_normal_mode("<leader><leader>", require("telescope.builtin").find_files, "Find Files")
+  map_normal_mode("<leader>sb", "<cmd>Telescope buffers<CR>", "[s]earch opened [b]uffers")
+  map_normal_mode("<leader>sC", "<cmd>Telescope commands<cr>", "[s]earch [C]ommands")
+  map_normal_mode("<leader>/", require("telescope").extensions.live_grep_args.live_grep_args, "[s]earch [g]rep")
 end
 
 function M.setup_trouble_keymaps()
