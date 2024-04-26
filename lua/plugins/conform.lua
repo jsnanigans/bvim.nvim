@@ -1,20 +1,26 @@
 return {
   'stevearc/conform.nvim',
+  event = { 'BufWritePre' },
+  cmd = { 'ConformInfo' },
   config = function()
-    require("conform").setup({
-      format_on_save = {
-        -- These options will be passed to conform.format()
-        timeout_ms = 500,
-        lsp_fallback = true,
-      },
+    local jsFmt = { { 'prettierd', 'prettier' } }
+    require('conform').setup {
       formatters_by_ft = {
-        lua = { "stylua" },
+        lua = { 'stylua' },
         -- Use a sub-list to run only the first available formatter
-        javascript = { { "prettierd", "prettier" } },
-        typescript = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
+        typescript = jsFmt,
+        typescriptreact = jsFmt,
+        javascript = jsFmt,
+        javascriptreact = jsFmt,
+        ['*'] = { 'codespell', 'trim_whitespace' },
       },
+    }
+
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      pattern = '*',
+      callback = function(args)
+        require('conform').format { bufnr = args.buf, lsp_fallback = true }
+      end,
     })
-  end
+  end,
 }

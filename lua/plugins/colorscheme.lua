@@ -1,14 +1,14 @@
 return {
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   init = function()
-  --     -- TODO: set colorscheme based on system/terminal dark/light mode
-  --     -- Also see utils/colorscheme.lua
-  --     vim.cmd.colorscheme("tokyonight-moon")
-  --   end,
-  -- },
+  {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    init = function()
+      -- TODO: set colorscheme based on system/terminal dark/light mode
+      -- Also see utils/colorscheme.lua
+      vim.cmd.colorscheme 'tokyonight-moon'
+    end,
+  },
   --
   -- {
   --   "catppuccin/nvim",
@@ -27,11 +27,21 @@ return {
   --     vim.cmd.colorscheme("rose-pine")
   --   end,
   -- },
-   {
-      "nyoom-engineering/oxocarbon.nvim",
-      lazy=false,
-      init = function()
-        vim.cmd.colorscheme("oxocarbon")
-      end,
-    }
+  -- {
+  --    "nyoom-engineering/oxocarbon.nvim",
+  --    lazy=false,
+  --    init = function()
+  --      vim.cmd.colorscheme("oxocarbon")
+  --    end,
+  --  },
+  -- {
+  --   'craftzdog/solarized-osaka.nvim',
+  --   lazy = true,
+  --   priority = 1000,
+  --   opts = function()
+  --     return {
+  --       transparent = true,
+  --     }
+  --   end,
+  -- },
 }

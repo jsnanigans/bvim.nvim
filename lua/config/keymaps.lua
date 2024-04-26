@@ -6,12 +6,11 @@ local function map_normal_mode(keys, func, desc)
   -- default values:
   -- noremap: false
   -- silent: false
-  vim.keymap.set("n", keys, func, { desc = desc, noremap = false, silent = true })
+  vim.keymap.set('n', keys, func, { desc = desc, noremap = false, silent = true })
 end
 
 function M.setup_mini_keymaps()
-  vim.keymap.set('n', '<C-b>', ':lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>',
-    { noremap = true, silent = true, desc = 'Open Files' })
+  vim.keymap.set('n', '<C-b>', ':lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>', { noremap = true, silent = true, desc = 'Open Files' })
 end
 
 -- file stuff
@@ -23,110 +22,133 @@ vim.keymap.set('n', '<C-s>', ':w<CR>', { noremap = true, silent = true, desc = '
 vim.keymap.set('n', '<C-o>', ':b#<CR>', { noremap = true, silent = true, desc = 'Go to previous open buffer' })
 vim.keymap.set('n', '<leader>qq', ':wqa<CR>', { noremap = true, silent = true, desc = 'Save and quit all' })
 
-
 function M.setup_whichkey()
   return {
-    ["<leader>q"] = {
-      name = "+quick actions",
+    ['<leader>q'] = {
+      name = '+quick actions',
     },
-    ["<leader>s"] = {
-      name = "+search",
-    }
+    ['<leader>s'] = {
+      name = '+search',
+    },
   }
 end
 
 function M.setup_telescope_keymaps()
   -- git
-  map_normal_mode("<leader>sc", "<cmd>Telescope git_commits<CR>", "[s]earch git [c]ommits")
-  map_normal_mode("<leader>sg", "<cmd>Telescope git_status<CR>", "[s]earch git changes")
+  map_normal_mode('<leader>sc', '<cmd>Telescope git_commits<CR>', '[s]earch git [c]ommits')
+  map_normal_mode('<leader>sg', '<cmd>Telescope git_status<CR>', '[s]earch git changes')
 
   -- searching
-  map_normal_mode("<leader><leader>", require("telescope.builtin").find_files, "Find Files")
-  map_normal_mode("<leader>sb", "<cmd>Telescope buffers<CR>", "[s]earch opened [b]uffers")
-  map_normal_mode("<leader>sC", "<cmd>Telescope commands<cr>", "[s]earch [C]ommands")
-  map_normal_mode("<leader>/", require("telescope").extensions.live_grep_args.live_grep_args, "[s]earch [g]rep")
+  map_normal_mode('<leader><leader>', require('telescope.builtin').find_files, 'Find Files')
+  map_normal_mode('<leader>sb', '<cmd>Telescope buffers<CR>', '[s]earch opened [b]uffers')
+  map_normal_mode('<leader>ss', '<cmd>Telescope lsp_workspace_symbols<CR>', 'Symbols')
+  map_normal_mode('<leader>ds', '<cmd>Telescope lsp_document_symbols<CR>', 'Symbols')
+  map_normal_mode('<leader>sC', '<cmd>Telescope commands<cr>', '[s]earch [C]ommands')
+  map_normal_mode('<leader>sp', '<cmd>Telescope spell_suggest<cr>', '[s]earch [C]ommands')
+  map_normal_mode('<leader>/', require('telescope').extensions.live_grep_args.live_grep_args, '[s]earch [g]rep')
+  map_normal_mode('<leader>sf', function()
+    local telescope = require 'telescope'
+
+    local function telescope_buffer_dir()
+      return vim.fn.expand '%:p:h'
+    end
+
+    telescope.extensions.file_browser.file_browser {
+      path = '%:p:h',
+      cwd = telescope_buffer_dir(),
+      respect_gitignore = false,
+      hidden = true,
+      grouped = true,
+      previewer = false,
+      initial_mode = 'normal',
+      layout_config = { height = 40 },
+    }
+  end, 'Open File Browser with the path of the current buffer')
 end
 
 function M.setup_trouble_keymaps()
   return {
     {
-      "<leader>xx",
-      "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "Diagnostics (Trouble)",
+      '<leader>xx',
+      '<cmd>Trouble diagnostics toggle<cr>',
+      desc = 'Diagnostics (Trouble)',
     },
     {
-      "<leader>xX",
-      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      desc = "Buffer Diagnostics (Trouble)",
+      '<leader>xX',
+      '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+      desc = 'Buffer Diagnostics (Trouble)',
     },
     {
-      "<leader>xs",
-      "<cmd>Trouble symbols toggle focus=false<cr>",
-      desc = "Symbols (Trouble)",
+      '<leader>xs',
+      '<cmd>Trouble symbols toggle focus=false<cr>',
+      desc = 'Symbols (Trouble)',
     },
     {
-      "<leader>xr",
-      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-      desc = "LSP Definitions / references / ... (Trouble)",
+      '<leader>xr',
+      '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+      desc = 'LSP Definitions / references / ... (Trouble)',
     },
     {
-      "<leader>xl",
-      "<cmd>Trouble loclist toggle<cr>",
-      desc = "Location List (Trouble)",
+      '<leader>xl',
+      '<cmd>Trouble loclist toggle<cr>',
+      desc = 'Location List (Trouble)',
     },
     {
-      "<leader>xq",
-      "<cmd>Trouble qflist toggle<cr>",
-      desc = "Quickfix List (Trouble)",
+      '<leader>xq',
+      '<cmd>Trouble qflist toggle<cr>',
+      desc = 'Quickfix List (Trouble)',
     },
   }
 end
 
 function M.setup_lsp_keymaps(event)
   local map = function(keys, func, desc)
-    vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+    vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
   end
 
   -- Jump to the definition of the word under your cursor.
   --  This is where a variable was first declared, or where a function is defined, etc.
   --  To jump back, press <C-t>.
-  map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+  map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
   -- Find references for the word under your cursor.
-  map("gr", ':lua require("telescope.builtin").lsp_references({ show_line = false })<CR>', "[G]oto [R]eferences")
+  map('gr', ':lua require("telescope.builtin").lsp_references({ show_line = false })<CR>', '[G]oto [R]eferences')
 
   -- Jump to the implementation of the word under your cursor.
   --  Useful when your language has ways of declaring types without an actual implementation.
-  map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+  map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
   -- Jump to the type of the word under your cursor.
   --  Useful when you're not sure what type a variable is and you want to see
   --  the definition of its *type*, not where it was *defined*.
-  map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+  map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
 
   -- Fuzzy find all the symbols in your current document.
   --  Symbols are things like variables, functions, types, etc.
-  map("<leader>cS", require("telescope.builtin").lsp_document_symbols, "Do[c]ument [S]ymbols (telescope)")
+  map('<leader>cS', require('telescope.builtin').lsp_document_symbols, 'Do[c]ument [S]ymbols (telescope)')
 
   -- Fuzzy find all the symbols in your current workspace
   --  Similar to document symbols, except searches over your whole project.
-  map("<leader>cw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[w]orkspace [s]ymbols (telescope)")
+  map('<leader>cw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[w]orkspace [s]ymbols (telescope)')
 
   -- Rename the variable under your cursor
   --  Most Language Servers support renaming across files, etc.
-  map("<leader>cr", vim.lsp.buf.rename, "[C]ode [R]ename")
+  map('<leader>cr', vim.lsp.buf.rename, '[C]ode [R]ename')
 
   -- Execute a code action, usually your cursor needs to be on top of an error
   -- or a suggestion from your LSP for this to activate.
-  map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+  map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   -- Opens a popup that displays documentation about the word under your cursor
   --  See `:help K` for why this keymap
-  map("K", vim.lsp.buf.hover, "Hover Documentation")
+  map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
   -- WARN: This is not Goto Definition, this is Goto Declaration.
   --  For example, in C this would take you to the header
-  map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+  map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+  -- lsp rename
+  map('<leader>cr', vim.lsp.buf.rename, '[C]ode [R]ename')
 end
 
 -- -- yank
