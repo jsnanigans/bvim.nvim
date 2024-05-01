@@ -30,14 +30,14 @@ return {
         mapping = cmp.mapping.preset.insert {
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          -- select next item with different sources
+          ['<C-h>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
           ['<C-j>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
           ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-x>'] = cmp.mapping.complete {
-            config = { sources = cmp.config.sources {
-              { name = 'codeium' },
-            } },
-          },
+          -- ['<C-x>'] = cmp.mapping.complete {
+          --   config = { sources = cmp.config.sources {
+          --     { name = 'codeium' },
+          --   } },
+          -- },
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         },
@@ -48,7 +48,7 @@ return {
           { name = 'path' },
         },
         experimental = {
-          ghost_text = true,
+          -- ghost_text = true,
         },
       }
     end,

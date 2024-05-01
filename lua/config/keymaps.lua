@@ -151,6 +151,33 @@ function M.setup_lsp_keymaps(event)
   map('<leader>cr', vim.lsp.buf.rename, '[C]ode [R]ename')
 end
 
+function M.setup_spectre_keymaps()
+  vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+    desc = 'Toggle Spectre',
+  })
+  vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = 'Search current word',
+  })
+  vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = 'Search current word',
+  })
+  vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = 'Search on current file',
+  })
+end
+
+function M.setup_hlslens_keymaps()
+  local kopts = { noremap = true, silent = true }
+  vim.api.nvim_set_keymap('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+
+  vim.api.nvim_set_keymap('n', '<Leader>l', '<Cmd>noh<CR>', kopts)
+end
+
 -- -- yank
 -- vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)')
 -- vim.keymap.set({ 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)')
