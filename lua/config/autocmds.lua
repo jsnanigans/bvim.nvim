@@ -1,19 +1,19 @@
 -- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = vim.api.nvim_create_augroup("checktime", { clear = true }),
+vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
+  group = vim.api.nvim_create_augroup('checktime', { clear = true }),
   callback = function()
-    if vim.o.buftype ~= "nofile" then
-      vim.cmd("checktime")
+    if vim.o.buftype ~= 'nofile' then
+      vim.cmd 'checktime'
     end
   end,
 })
 
 -- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("Yank", { clear = true }),
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = vim.api.nvim_create_augroup('Yank', { clear = true }),
   callback = function()
-    if vim.fn.has("wsl") == 1 then
-      vim.fn.system("clip.exe", vim.fn.getreg('"'))
+    if vim.fn.has 'wsl' == 1 then
+      vim.fn.system('clip.exe', vim.fn.getreg '"')
     else
       vim.highlight.on_yank()
     end
@@ -21,20 +21,20 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
-  group = vim.api.nvim_create_augroup("resize_splits", { clear = true }),
+vim.api.nvim_create_autocmd({ 'VimResized' }, {
+  group = vim.api.nvim_create_augroup('resize_splits', { clear = true }),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
-    vim.cmd("tabdo wincmd =")
-    vim.cmd("tabnext " .. current_tab)
+    vim.cmd 'tabdo wincmd ='
+    vim.cmd('tabnext ' .. current_tab)
   end,
 })
 
 -- Go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup("last_loc", { clear = true }),
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = vim.api.nvim_create_augroup('last_loc', { clear = true }),
   callback = function(event)
-    local exclude = { "gitcommit" }
+    local exclude = { 'gitcommit' }
     local buf = event.buf
     if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
       return
@@ -49,15 +49,27 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+  group = vim.api.nvim_create_augroup('auto_create_dir', { clear = true }),
   callback = function(event)
-    if event.match:match("^%w%w+://") then
+    if event.match:match '^%w%w+://' then
       return
     end
     local file = vim.uv.fs_realpath(event.match) or event.match
-    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
   end,
 })
 
 -- auto sessions
+
+-- git conflictx
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'GitConflictDetected',
+  callback = function()
+    vim.notify('Conflict detected in ' .. vim.fn.expand '<afile>')
+    vim.keymap.set('n', 'cww', function()
+      engage.conflict_buster()
+      create_buffer_local_mappings()
+    end)
+  end,
+})

@@ -3,6 +3,13 @@ return {
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = 'transparent',
+        floats = 'transparent',
+      },
+    },
     init = function()
       -- TODO: set colorscheme based on system/terminal dark/light mode
       -- Also see utils/colorscheme.lua

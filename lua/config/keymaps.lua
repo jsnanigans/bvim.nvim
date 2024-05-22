@@ -33,13 +33,48 @@ function M.setup_whichkey()
   }
 end
 
+function M.setup_fzf_keymaps()
+  -- git
+
+  -- searching
+  -- map_normal_mode('<leader><leader>', '<cmd>lua require("fzf-lua").files()<CR>', 'Find Files')
+  map_normal_mode('<leader><leader>', function()
+    local fzf = require 'fzf-lua'
+    fzf.files {
+      cmd = 'fd -t f -g | grep -v ".test."',
+    }
+  end, 'Find Files')
+  map_normal_mode('<leader>ft', function()
+    local fzf = require 'fzf-lua'
+    fzf.files {
+      cmd = 'fd -t f -g "*.test.*"',
+    }
+  end, 'Find test Files')
+  map_normal_mode('<leader>fx', function()
+    local fzf = require 'fzf-lua'
+    fzf.files {
+      cmd = 'fd -t f -g "*.[tj]sx"',
+    }
+  end, 'Find jsx or tsx Files')
+  map_normal_mode('<leader>fb', function()
+    local fzf = require 'fzf-lua'
+    fzf.files {
+      cmd = 'fd -t f -g "*[BC][lu][ob][ci][.t]*" | grep -v ".test."',
+    }
+  end, 'Find bloc or qubit Files')
+  map_normal_mode('<leader>b', '<cmd>lua require("fzf-lua").buffers()<CR>', 'Find Files')
+  --live grep
+  map_normal_mode('<leader>/', '<cmd>lua require("fzf-lua").live_grep()<CR>', 'Find Files')
+end
+
 function M.setup_telescope_keymaps()
   -- git
   map_normal_mode('<leader>sc', '<cmd>Telescope git_commits<CR>', '[s]earch git [c]ommits')
   map_normal_mode('<leader>sg', '<cmd>Telescope git_status<CR>', '[s]earch git changes')
 
   -- searching
-  map_normal_mode('<leader><leader>', require('telescope.builtin').find_files, 'Find Files')
+  -- map_normal_mode('<leader><leader>', require('telescope.builtin').find_files, 'Find Files')
+  -- vim.keymap.set('n', '<c-/>', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
   map_normal_mode('<leader>sb', '<cmd>Telescope buffers<CR>', '[s]earch opened [b]uffers')
   map_normal_mode('<leader>ss', '<cmd>Telescope lsp_workspace_symbols<CR>', 'Symbols')
   map_normal_mode('<leader>ds', '<cmd>Telescope lsp_document_symbols<CR>', 'Symbols')
@@ -69,13 +104,13 @@ end
 function M.setup_trouble_keymaps()
   return {
     {
-      '<leader>xx',
-      '<cmd>Trouble diagnostics toggle<cr>',
+      '<leader>xX',
+      '<cmd>TroubleToggle workspace_diagnostics<cr>',
       desc = 'Diagnostics (Trouble)',
     },
     {
-      '<leader>xX',
-      '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+      '<leader>xx',
+      '<cmd>TroubleToggle document_diagnostics<cr>',
       desc = 'Buffer Diagnostics (Trouble)',
     },
     {
@@ -98,6 +133,31 @@ function M.setup_trouble_keymaps()
       '<cmd>Trouble qflist toggle<cr>',
       desc = 'Quickfix List (Trouble)',
     },
+    -- {
+    --   'gd',
+    --   '<cmd>Trouble lsp_definitions<cr>',
+    --   desc = 'Goto Definition (Trouble)',
+    -- },
+    -- {
+    --   'gD',
+    --   '<cmd>Trouble lsp_declarations<cr>',
+    --   desc = 'Goto Declaration (Trouble)',
+    -- },
+    -- {
+    --   'gr',
+    --   '<cmd>TroubleToggle lsp_references<cr>',
+    --   desc = 'Goto References (Trouble)',
+    -- },
+    -- {
+    --   'gt',
+    --   '<cmd>Trouble lsp_type_definitions<cr>',
+    --   desc = 'Goto Type Definition (Trouble)',
+    -- },
+    -- {
+    --   '<leader>qf',
+    --   '<cmd>Trouble quickfix<cr>',
+    --   desc = 'Quickfix (Trouble)',
+    -- },
   }
 end
 
