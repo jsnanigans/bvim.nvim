@@ -3,17 +3,30 @@ return {
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
-    opts = {
-      transparent = true,
-      styles = {
-        sidebars = 'transparent',
-        floats = 'transparent',
-      },
-    },
-    init = function()
-      -- TODO: set colorscheme based on system/terminal dark/light mode
-      -- Also see utils/colorscheme.lua
-      vim.cmd.colorscheme 'tokyonight-moon'
+    -- opts = {
+    -- },
+    -- init = function()
+    --   -- TODO: set colorscheme based on system/terminal dark/light mode
+    --   -- Also see utils/colorscheme.lua
+    -- end,
+    config = function()
+      require('tokyonight').setup {
+        -- transparent = true,
+        styles = {
+          comments = { italic = true },
+          keywords = {
+            italic = true,
+          },
+          functions = {
+            bold = true,
+          },
+          variables = {
+            bold = true,
+          },
+        },
+        style = 'night',
+      }
+      vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
   --
