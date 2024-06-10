@@ -1,15 +1,15 @@
 return {
-  {
-    'lepture/vim-jinja',
-    dependencies = {
-      {
-        'pearofducks/ansible-vim',
-        build = './UltiSnips/generate.sh',
-        lazy = false,
-      },
-    },
-    lazy = false,
-  },
+  -- {
+  --   'lepture/vim-jinja',
+  --   dependencies = {
+  --     {
+  --       'pearofducks/ansible-vim',
+  --       build = './UltiSnips/generate.sh',
+  --       lazy = false,
+  --     },
+  --   },
+  --   lazy = false,
+  -- },
   {
     'nvim-treesitter/nvim-treesitter',
     event = 'VeryLazy',

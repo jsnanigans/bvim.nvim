@@ -33,9 +33,15 @@ return {
           -- map('n', '<leader>hS', gitsigns.stage_buffer)
           -- map('n', '<leader>hu', gitsigns.undo_stage_hunk)
           -- map('n', '<leader>hR', gitsigns.reset_buffer)
-          map('n', '<leader>hp', gitsigns.preview_hunk)
-          map('n', '<leader>hs', gitsigns.stage_hunk)
-          map('n', '<leader>hr', gitsigns.reset_hunk)
+          map('n', '<leader>hp', gitsigns.preview_hunk, {
+            desc = 'Preview hunk',
+          })
+          map('n', '<leader>hs', gitsigns.stage_hunk, {
+            desc = 'Stage hunk',
+          })
+          map('n', '<leader>hr', gitsigns.reset_hunk, {
+            desc = 'Reset hunk',
+          })
           -- map('v', '<leader>hs', function()
           --   gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
           -- end)
@@ -45,16 +51,28 @@ return {
 
           map('n', '<leader>hb', function()
             gitsigns.blame_line { full = true }
-          end)
-          map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
-          map('n', '<leader>hd', gitsigns.diffthis)
+          end, {
+            desc = 'Blame line',
+          })
+          map('n', '<leader>tb', gitsigns.toggle_current_line_blame, {
+            desc = 'Toggle current line blame',
+          })
+          map('n', '<leader>hd', gitsigns.diffthis, {
+            desc = 'Diff this',
+          })
           map('n', '<leader>hD', function()
             gitsigns.diffthis '~'
-          end)
-          map('n', '<leader>td', gitsigns.toggle_deleted)
+          end, {
+            desc = 'Diff ~',
+          })
+          map('n', '<leader>td', gitsigns.toggle_deleted, {
+            desc = 'Toggle deleted',
+          })
 
           -- Text object
-          map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+          map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {
+            desc = 'Gitsigns select hunk',
+          })
         end,
       }
     end,

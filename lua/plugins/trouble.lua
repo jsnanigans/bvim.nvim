@@ -1,5 +1,4 @@
 return {
-  { 'folke/neodev.nvim', opts = {} },
   {
     'folke/trouble.nvim',
     cmd = 'Trouble',
