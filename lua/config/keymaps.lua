@@ -105,31 +105,31 @@ function M.setup_trouble_keymaps()
   return {
     {
       '<leader>xX',
-      '<cmd>TroubleToggle workspace_diagnostics<cr>',
+      '<cmd>Trouble diagnostics toggle<cr>',
       desc = 'Diagnostics (Trouble)',
     },
     {
       '<leader>xx',
-      '<cmd>TroubleToggle document_diagnostics<cr>',
+      '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
       desc = 'Buffer Diagnostics (Trouble)',
     },
     {
-      '<leader>xs',
+      '<leader>cs',
       '<cmd>Trouble symbols toggle focus=false<cr>',
       desc = 'Symbols (Trouble)',
     },
     {
-      '<leader>xr',
+      '<leader>cl',
       '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
       desc = 'LSP Definitions / references / ... (Trouble)',
     },
     {
-      '<leader>xl',
+      '<leader>xL',
       '<cmd>Trouble loclist toggle<cr>',
       desc = 'Location List (Trouble)',
     },
     {
-      '<leader>xq',
+      '<leader>xQ',
       '<cmd>Trouble qflist toggle<cr>',
       desc = 'Quickfix List (Trouble)',
     },
@@ -165,6 +165,11 @@ function M.setup_lsp_keymaps(event)
   local map = function(keys, func, desc)
     vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
   end
+
+  -- map('<leader>qf', vim.lsp.diagnostic.set_loclist, 'Quickfix List')
+  vim.keymap.set('n', '<leader>oi', '<cmd>OrganizeImports<cr>', {
+    desc = 'Organize Imports',
+  })
 
   -- Jump to the definition of the word under your cursor.
   --  This is where a variable was first declared, or where a function is defined, etc.

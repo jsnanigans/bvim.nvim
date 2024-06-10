@@ -1,7 +1,8 @@
 return {
+  { 'folke/neodev.nvim', opts = {} },
   {
     'folke/trouble.nvim',
-    event = 'VeryLazy',
+    cmd = 'Trouble',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     ---@class trouble.Config
     opts = {
