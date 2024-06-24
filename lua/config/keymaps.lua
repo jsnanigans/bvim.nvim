@@ -13,6 +13,19 @@ function M.setup_mini_keymaps()
   vim.keymap.set('n', '<C-b>', ':lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>', { noremap = true, silent = true, desc = 'Open Files' })
 end
 
+function M.setup_hop_keymaps()
+  local hop = require 'hop'
+  local directions = require('hop.hint').HintDirection
+  vim.keymap.set('n', 's', function()
+    hop.hint_char1 { direction = directions.AFTER_CURSOR }
+  end, { desc = 'Hop Forward', noremap = true, silent = true })
+  vim.keymap.set('n', 'S', function()
+    hop.hint_char1 { direction = directions.BEFORE_CURSOR }
+  end, { desc = 'Hop Back', noremap = true, silent = true })
+
+  vim.keymap.set('n', '<C-f>', ':HopPattern<CR>', { desc = 'Hop Pattern', noremap = true, silent = true })
+end
+
 -- file stuff
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
