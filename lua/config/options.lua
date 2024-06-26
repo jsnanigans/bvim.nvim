@@ -1,8 +1,8 @@
 M = {}
 
 -- leader key
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- undo
 vim.opt.undofile = true
@@ -10,7 +10,7 @@ vim.opt.undolevels = 10000
 vim.opt.updatetime = 200 -- Save swap file and trigger CursorHold
 
 -- skip startup screen
-vim.opt.shortmess:append("I")
+vim.opt.shortmess:append 'I'
 
 -- fillchars
 -- vim.opt.fillchars = {
@@ -51,13 +51,13 @@ vim.opt.smartcase = true
 vim.opt.wrap = false
 
 -- completion
-vim.opt.completeopt = "menuone,noselect"
+vim.opt.completeopt = 'menuone,noselect'
 
 -- 24-bit color
 vim.opt.termguicolors = true
 
 -- sign column
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = 'yes'
 
 -- cursor line highlight
 vim.opt.cursorline = true
@@ -73,33 +73,33 @@ vim.opt.splitright = true
 vim.opt.scrolloff = 8
 
 -- mouse support in all modes
-vim.opt.mouse = "a"
+vim.opt.mouse = 'a'
 
 -- project specific settings (see lazyrc.lua for .lazy.lua support)
-vim.opt.exrc = true   -- allow local .nvim.lua .vimrc .exrc files
+vim.opt.exrc = true -- allow local .nvim.lua .vimrc .exrc files
 vim.opt.secure = true -- disable shell and write commands in local .nvim.lua .vimrc .exrc files
 
 -- sync with system clipboard (also see autocmds for text yank config)
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = 'unnamedplus'
 
 -- TODO: pick from https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
-vim.opt.listchars = "tab:▸ ,trail:·,nbsp:␣,extends:❯,precedes:❮" -- show symbols for whitespace
+vim.opt.listchars = 'tab:▸ ,trail:·,nbsp:␣,extends:❯,precedes:❮' -- show symbols for whitespace
 
 M.setup_folding_options = function()
-    vim.opt.foldcolumn = "0"
-    vim.opt.foldlevel = 99
-    vim.opt.foldlevelstart = 99
-    vim.opt.foldenable = true
+  vim.opt.foldcolumn = '0'
+  vim.opt.foldlevel = 99
+  vim.opt.foldlevelstart = 99
+  vim.opt.foldenable = true
 end
 
 -- settings for neovim 0.10.0+
-if require("utils.version").is_neovim_0_10_0() then
-    vim.opt.smoothscroll = true
+if require('utils.version').is_neovim_0_10_0() then
+  vim.opt.smoothscroll = true
 end
 
 -- settings for vscode neovim
 if not vim.g.vscode then
-    vim.opt.timeoutlen = 300 -- Lower than default (1000) to quickly trigger which-key
+  vim.opt.timeoutlen = 300 -- Lower than default (1000) to quickly trigger which-key
 end
 
 return M

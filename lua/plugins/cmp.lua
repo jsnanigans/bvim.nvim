@@ -35,16 +35,16 @@ return {
           ['<C-h>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
           ['<C-j>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
           ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-x>'] = cmp.mapping.complete {
-            config = { sources = cmp.config.sources {
-              { name = 'luasnip' },
-            } },
-          },
           -- ['<C-x>'] = cmp.mapping.complete {
           --   config = { sources = cmp.config.sources {
-          --     { name = 'codeium' },
+          --     { name = 'luasnip' },
           --   } },
           -- },
+          ['<C-x>'] = cmp.mapping.complete {
+            config = { sources = cmp.config.sources {
+              { name = 'copilot' },
+            } },
+          },
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         },
@@ -58,6 +58,12 @@ return {
           -- ghost_text = true,
         },
       }
+    end,
+  },
+  {
+    'zbirenbaum/copilot-cmp',
+    config = function()
+      require('copilot_cmp').setup()
     end,
   },
 }
