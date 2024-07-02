@@ -1,82 +1,96 @@
 return {
-    {
-        'williamboman/mason.nvim',
-        lazy = false,
-        dependencies = {
-            {
-                'williamboman/mason-lspconfig.nvim',
-                dependencies = { 'neovim/nvim-lspconfig' },
-            },
-        },
-        config = function()
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  {
+    'williamboman/mason.nvim',
+    lazy = false,
+    dependencies = {
+      {
+        'williamboman/mason-lspconfig.nvim',
+        dependencies = { 'neovim/nvim-lspconfig' },
+      },
+    },
+    config = function()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-            local servers = {
-                'lua_ls',
-                'tsserver',
-                'eslint',
-                'typos_lsp',
-                'astro',
-            }
+      local servers = {
+        'lua_ls',
+        'tsserver',
+        'eslint',
+        'typos_lsp',
+        'astro',
+      }
 
-            local function organize_imports()
-                local params = {
-                    command = '_typescript.organizeImports',
-                    arguments = { vim.api.nvim_buf_get_name(0) },
-                    title = '',
-                }
-                vim.lsp.buf.execute_command(params)
-            end
+      local function organize_imports()
+        local params = {
+          command = '_typescript.organizeImports',
+          arguments = { vim.api.nvim_buf_get_name(0) },
+          title = '',
+        }
+        vim.lsp.buf.execute_command(params)
+      end
 
-            require('mason').setup()
-            require('mason-lspconfig').setup {
-                ensure_installed = servers,
-            }
+      require('mason').setup()
+      require('mason-lspconfig').setup {
+        ensure_installed = servers,
+      }
 
-            local lspconfig = require 'lspconfig'
+      local lspconfig = require 'lspconfig'
 
-            local onAttach = {
-                eslint = function(client, bufnr)
-                    vim.api.nvim_create_autocmd('BufWritePre', {
-                        buffer = bufnr,
-                        command = 'EslintFixAll',
-                    })
-                end,
-            }
-            local commands = {
-                tsserver = {
-                    OrganizeImports = {
-                        organize_imports,
-                        description = 'Organize Imports',
-                    },
-                },
-            }
-
-            for _, lsp in ipairs(servers) do
-                lspconfig[lsp].setup {
-                    on_attach = function(client, bufnr)
-                        local oa = onAttach[lsp]
-                        if oa then
-                            oa(client, bufnr)
-                        end
-                    end,
-                    capabilities = capabilities,
-                    commands = commands[lsp],
-                }
-            end
-
-            vim.api.nvim_create_autocmd('LspAttach', {
-                group = vim.api.nvim_create_augroup('lsp-attach-keymaps', { clear = true }),
-                callback = function(event)
-                    require('config.keymaps').setup_lsp_keymaps(event)
-                end,
-            })
+      local onAttach = {
+        eslint = function(client, bufnr)
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = bufnr,
+            command = 'EslintFixAll',
+          })
         end,
-    },
-    {
-        'j-hui/fidget.nvim',
-        opts = {
-            -- options
+      }
+      local commands = {
+        tsserver = {
+          OrganizeImports = {
+            organize_imports,
+            description = 'Organize Imports',
+          },
         },
+      }
+      local init_options = {
+        typos_lsp = {
+          cmd_env = { RUST_LOG = 'error' },
+          init_options = {
+            -- Custom config. Used together with any workspace config files, taking precedence for
+            -- settings declared in both. Equivalent to the typos `--config` cli argument.
+            config = '/Users/bdan/.config/typos.toml',
+            -- How typos are rendered in the editor, can be one of an Error, Warning, Info or Hint.
+            -- Defaults to error.
+            diagnosticSeverity = 'Error',
+          },
+        },
+      }
+
+      for _, lsp in ipairs(servers) do
+        lspconfig[lsp].setup {
+          on_attach = function(client, bufnr)
+            local oa = onAttach[lsp]
+            if oa then
+              oa(client, bufnr)
+            end
+          end,
+          capabilities = capabilities,
+          commands = commands[lsp],
+          init_options = init_options[lsp],
+        }
+      end
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('lsp-attach-keymaps', { clear = true }),
+        callback = function(event)
+          require('config.keymaps').setup_lsp_keymaps(event)
+        end,
+      })
+    end,
+  },
+  {
+    'j-hui/fidget.nvim',
+    opts = {
+      -- options
     },
+  },
 }

@@ -70,7 +70,7 @@ vim.opt.splitright = true
 -- see ufo.lua
 
 -- scroll off
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 5
 
 -- mouse support in all modes
 vim.opt.mouse = 'a'

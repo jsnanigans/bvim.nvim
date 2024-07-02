@@ -27,7 +27,7 @@ return {
   
      local conf = vim.tbl_deep_extend('force', {
        defaults = {
-         file_ignore_patterns = { '.git/', 'node_modules' },
+         file_ignore_patterns = { '.git/' },
          theme = 'dropdown',
          layout_config = {
            -- other layout configuration here
