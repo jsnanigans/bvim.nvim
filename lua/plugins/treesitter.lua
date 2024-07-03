@@ -25,16 +25,16 @@ return {
     end,
   },
 
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-    event = 'VeryLazy',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', lazy = true },
-    config = function()
-      require('treesitter-context').setup {
-        max_lines = 6,
-      }
-    end,
-  },
+  -- {
+  --   'nvim-treesitter/nvim-treesitter-context',
+  --   event = 'VeryLazy',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter', lazy = true },
+  --   config = function()
+  --     require('treesitter-context').setup {
+  --       max_lines = 6,
+  --     }
+  --   end,
+  -- },
 
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -50,7 +50,7 @@ return {
               [']m'] = '@function.outer',
               [']]'] = { query = '@class.outer', desc = 'Next class start' },
               --
-              -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+              -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
               [']o'] = '@loop.*',
               -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
               --

@@ -1,4 +1,14 @@
 return {
+  -- {
+  --   'SmiteshP/nvim-navic',
+  --   dependencies = { 'neovim/nvim-lspconfig' },
+  --   config = function()
+  --     local navic = require 'nvim-navic'
+  --     navic.setup {
+  --       lsp = { auto_attach = true },
+  --     }
+  --   end,
+  -- },
   {
     'williamboman/mason.nvim',
     lazy = false,
@@ -7,6 +17,7 @@ return {
         'williamboman/mason-lspconfig.nvim',
         dependencies = { 'neovim/nvim-lspconfig' },
       },
+      -- 'SmiteshP/nvim-navic',
     },
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -34,6 +45,7 @@ return {
       }
 
       local lspconfig = require 'lspconfig'
+      -- local navic = require 'nvim-navic'
 
       local onAttach = {
         eslint = function(client, bufnr)
@@ -72,6 +84,9 @@ return {
             if oa then
               oa(client, bufnr)
             end
+            -- if client.server_capabilities.documentSymbolProvider then
+            --   navic.attach(client, bufnr)
+            -- end
           end,
           capabilities = capabilities,
           commands = commands[lsp],

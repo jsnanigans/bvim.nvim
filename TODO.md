@@ -1,3 +1,54 @@
+@ lunar
+
+    ● alpha-nvim 0.69ms  VimEnter
+    ● bigfile.nvim 1.76ms  User FileOpened
+    ● bufferline.nvim 8.03ms  User FileOpened
+    ● cmp-buffer 2.07ms  nvim-cmp
+    ● cmp-nvim-lsp 0.55ms 󰢱 cmp_nvim_lsp  /Users/bdan/.local/share/lunarvim/lvim/lua/lvim/lsp/init.lua
+    ● cmp-path 1.27ms  nvim-cmp
+    ● cmp_luasnip 13.31ms  nvim-cmp
+    ● Comment.nvim 2.62ms  User FileOpened
+    ● friendly-snippets 0.49ms  LuaSnip
+    ● gitsigns.nvim 4.78ms  User FileOpened
+    ● indent-blankline.nvim 2.07ms  User FileOpened
+    ● lazy.nvim 3.86ms  init.lua
+    ● lir.nvim 25.21ms  User DirOpened
+    ● lualine.nvim 5.87ms  VimEnter
+    ● LuaSnip 81.18ms  InsertEnter
+    ● lunar.nvim 0.02ms  start
+    ● mason-lspconfig.nvim 9.65ms  User FileOpened
+    ● mason.nvim 5.58ms  User FileOpened
+    ● nlsp-settings.nvim 0.61ms  nvim-lspconfig
+    ● none-ls.nvim 0.03ms 󰢱 null-ls  /Users/bdan/.local/share/lunarvim/lvim/lua/lvim/lsp/null-ls/init.lua
+    ● nvim-autopairs 20.38ms  InsertEnter
+    ● nvim-cmp 18.52ms  nvim-autopairs
+    ● nvim-lspconfig 4.06ms 󰢱 lspconfig.util  mason-lspconfig.nvim
+    ● nvim-navic 0.64ms  User FileOpened
+    ● nvim-tree.lua 17.14ms  User DirOpened
+    ● nvim-treesitter 10.14ms 󰢱 nvim-treesitter  vim-illuminate
+    ● nvim-ts-context-commentstring 0.48ms 󰢱 ts_context_commentstring  nvim-treesitter
+    ● nvim-web-devicons 0.44ms 󰢱 nvim-web-devicons  lir.nvim
+    ● plenary.nvim 0.36ms 󰢱 plenary.path  lir.nvim
+    ● project.nvim 1.02ms  VimEnter
+    ● telescope-fzf-native.nvim 1.58ms  telescope.nvim
+    ● telescope.nvim 52.18ms 󰢱 telescope.builtin  /Users/bdan/.local/share/lunarvim/lvim/lua/lvim/core/telescope/custom-finders.lua
+    ● vim-illuminate 13.28ms  User FileOpened
+    ● which-key.nvim 13.75ms  VeryLazy
+
+  Not Loaded (8)
+    ○ neodev.nvim 
+    ○ nvim-dap 
+    ○ nvim-dap-ui  nvim-dap 
+    ○ onedarker.nvim 
+    ○ schemastore.nvim 
+    ○ structlog.nvim 
+    ○ toggleterm.nvim  ToggleTerm  TermExec  ToggleTermToggleAll  ToggleTermSendCurrentLine  ToggleTermSendVisualLines  ToggleTermSendVisualSelection  <c-\> 
+    ○ tokyonight.nvim 
+
+  Disabled (1)
+    ○ cmp-cmdline  nvim-cmp 
+
+@ lazy
   Loaded (38)
     ● cmp-buffer 10.56ms  nvim-cmp
     ● cmp-nvim-lsp 1.08ms 󰢱 cmp_nvim_lsp  nvim-lspconfig
