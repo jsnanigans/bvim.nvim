@@ -40,9 +40,14 @@ return {
           --     { name = 'luasnip' },
           --   } },
           -- },
+          -- ['<C-x>'] = cmp.mapping.complete {
+          --   config = { sources = cmp.config.sources {
+          --     { name = 'copilot' },
+          --   } },
+          -- },
           ['<C-x>'] = cmp.mapping.complete {
             config = { sources = cmp.config.sources {
-              { name = 'copilot' },
+              { name = 'supermaven' },
             } },
           },
           ['<C-e>'] = cmp.mapping.abort(),
@@ -57,13 +62,19 @@ return {
         experimental = {
           -- ghost_text = true,
         },
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.abbr = string.sub(vim_item.abbr, 1, 35)
+            return vim_item
+          end,
+        },
       }
     end,
   },
-  {
-    'zbirenbaum/copilot-cmp',
-    config = function()
-      require('copilot_cmp').setup()
-    end,
-  },
+  -- {
+  --   'zbirenbaum/copilot-cmp',
+  --   config = function()
+  --     require('copilot_cmp').setup()
+  --   end,
+  -- },
 }

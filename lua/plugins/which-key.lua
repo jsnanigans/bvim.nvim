@@ -6,7 +6,7 @@ return {
       vim.o.timeout = true
       vim.o.timeoutlen = 300
       local opts = require('config.keymaps').setup_whichkey()
-      require('which-key').register(opts)
+      require('which-key').setup(opts)
     end,
   },
 }

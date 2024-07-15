@@ -24,10 +24,13 @@ return {
 
       local servers = {
         'lua_ls',
+        -- 'vtsls',
         'tsserver',
         'eslint',
+        'biome',
         'typos_lsp',
         'astro',
+        'jdtls',
       }
 
       local function organize_imports()
@@ -46,14 +49,29 @@ return {
 
       local lspconfig = require 'lspconfig'
       -- local navic = require 'nvim-navic'
+      lspconfig.sourcekit.setup {
+        capabilities = {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = true,
+            },
+          },
+        },
+      }
 
       local onAttach = {
-        eslint = function(client, bufnr)
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            buffer = bufnr,
-            command = 'EslintFixAll',
-          })
-        end,
+        -- eslint = function(client, bufnr)
+        --   vim.api.nvim_create_autocmd('BufWritePre', {
+        --     buffer = bufnr,
+        --     command = 'EslintFixAll',
+        --   })
+        -- end,
+        -- biome = function(client, bufnr)
+        --   vim.api.nvim_create_autocmd('BufWritePre', {
+        --     buffer = bufnr,
+        --     command = 'BiomeFormat',
+        --   })
+        -- end,
       }
       local commands = {
         tsserver = {

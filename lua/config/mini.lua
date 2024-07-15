@@ -69,6 +69,11 @@ end)
 -- Use external plugins with `add()`
 now(function()
   -- Add to current session (install if absent)
+  add 'echasnovski/mini.icons'
+  require('mini.icons').setup()
+end)
+now(function()
+  -- Add to current session (install if absent)
   add 'nvim-tree/nvim-web-devicons'
   require('nvim-web-devicons').setup()
 end)

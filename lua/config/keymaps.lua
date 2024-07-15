@@ -37,12 +37,8 @@ vim.keymap.set('n', '<leader>qq', ':wqa<CR>', { noremap = true, silent = true, d
 
 function M.setup_whichkey()
   return {
-    ['<leader>q'] = {
-      name = '+quick actions',
-    },
-    ['<leader>s'] = {
-      name = '+search',
-    },
+    { '<leader>q', group = 'quick actions' },
+    { '<leader>s', group = 'search' },
   }
 end
 
@@ -86,7 +82,7 @@ function M.setup_telescope_keymaps()
   map_normal_mode('<leader>sg', '<cmd>Telescope git_status<CR>', '[s]earch git changes')
 
   -- searching
-  -- map_normal_mode('<leader><leader>', require('telescope.builtin').find_files, 'Find Files')
+  map_normal_mode('<leader>fa', require('telescope.builtin').find_files, 'Find Files')
   -- vim.keymap.set('n', '<c-/>', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
   map_normal_mode('<leader>sb', '<cmd>Telescope buffers<CR>', '[s]earch opened [b]uffers')
   map_normal_mode('<leader>ss', '<cmd>Telescope lsp_workspace_symbols<CR>', 'Symbols')
