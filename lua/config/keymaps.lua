@@ -82,14 +82,94 @@ function M.setup_telescope_keymaps()
   map_normal_mode('<leader>sg', '<cmd>Telescope git_status<CR>', '[s]earch git changes')
 
   -- searching
-  map_normal_mode('<leader>fa', require('telescope.builtin').find_files, 'Find Files')
+  map_normal_mode('<leader>fa', function()
+    require('telescope.builtin').find_files {}
+  end, 'Find Files (All)')
+
+  map_normal_mode('<leader>fb', function()
+    require('telescope.builtin').find_files {
+      find_command = {
+        'rg',
+        '--files',
+        '--type=ts',
+        '--type=js',
+        '-g=*Cubit.*',
+        '-g=*Bloc.*',
+        '-g=!*.test.*',
+      },
+    }
+  end, 'Find Files (Test)')
+  map_normal_mode('<leader>fib', function()
+    require('telescope.builtin').live_grep {
+      additional_args = { '--hidden', '--type=ts', '--type=js', '-g=*Cubit.*', '-g=*Bloc.*', '-g=!*.test.*' },
+    }
+  end, 'Find Files (Test)')
+
+  map_normal_mode('<leader>ft', function()
+    require('telescope.builtin').find_files {
+      find_command = {
+        'rg',
+        '--files',
+        '--type=ts',
+        '--type=js',
+        '-g=*.test.*',
+      },
+    }
+  end, 'Find Files (Test)')
+  map_normal_mode('<leader>fit', function()
+    require('telescope.builtin').live_grep {
+      additional_args = { '--hidden', '--type=ts', '--type=js', '-g=*.test.*' },
+    }
+  end, 'Find in Files (Test)')
+
+  map_normal_mode('<leader>fj', function()
+    require('telescope.builtin').find_files {
+      find_command = {
+        'rg',
+        '--files',
+        '--type=ts',
+        '--type=js',
+        '-g=!*.test.*',
+      },
+    }
+  end, 'Find Files (JS/TS)')
+  map_normal_mode('<leader>fij', function()
+    require('telescope.builtin').live_grep {
+      additional_args = { '--type=ts', '--type=js', '-g=!*.test.*' },
+    }
+  end, 'Find in Files (JS/TS)')
+
+  map_normal_mode('<leader>fx', function()
+    require('telescope.builtin').find_files {
+      find_command = {
+        'rg',
+        '--files',
+        '--type=ts',
+        '--type=js',
+        '-g=*.tsx',
+        '-g=*.jsx',
+        '-g=!*.test.*',
+      },
+    }
+  end, 'Find Files (JSX/TSX)')
+  map_normal_mode('<leader>fix', function()
+    require('telescope.builtin').live_grep {
+      additional_args = { '--type=ts', '--type=js', '-g=*.tsx', '-g=*.jsx', '-g=!*.test.*' },
+    }
+  end, 'Find in Files (JSX/TSX)')
+
+  map_normal_mode('<leader><leader>', function()
+    require('telescope.builtin').buffers { show_all_buffers = true, sort_lastused = true, sort_mru = true, ignore_current_buffer = true }
+  end, 'Buffers')
   -- vim.keymap.set('n', '<c-/>', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
   map_normal_mode('<leader>sb', '<cmd>Telescope buffers<CR>', '[s]earch opened [b]uffers')
   map_normal_mode('<leader>ss', '<cmd>Telescope lsp_workspace_symbols<CR>', 'Symbols')
   map_normal_mode('<leader>ds', '<cmd>Telescope lsp_document_symbols<CR>', 'Symbols')
   map_normal_mode('<leader>sC', '<cmd>Telescope commands<cr>', '[s]earch [C]ommands')
   map_normal_mode('<leader>sp', '<cmd>Telescope spell_suggest<cr>', '[s]earch [C]ommands')
-  map_normal_mode('<leader>/', require('telescope').extensions.live_grep_args.live_grep_args, '[s]earch [g]rep')
+  map_normal_mode('<leader>/', function()
+    require('telescope').extensions.live_grep_args.live_grep_args()
+  end, '[s]earch [g]rep')
   map_normal_mode('<leader>sf', function()
     local telescope = require 'telescope'
 
