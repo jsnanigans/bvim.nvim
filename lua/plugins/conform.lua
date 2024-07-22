@@ -16,11 +16,14 @@ return {
       },
     }
 
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = '*',
-      callback = function(args)
-        require('conform').format { bufnr = args.buf, lsp_fallback = true }
-      end,
-    })
+    -- vim.api.nvim_create_autocmd('BufWritePre', {
+    --   pattern = '*',
+    --   callback = function(args)
+    --     require('conform').format { bufnr = args.buf, lsp_fallback = true }
+    --   end,
+    -- })
+    vim.keymap.set('n', '<leader>cf', function()
+      require('conform').format { bufnr = vim.api.nvim_get_current_buf(), lsp_fallback = true, timeout_ms = 10000 }
+    end, { desc = 'Format Buffer' })
   end,
 }
